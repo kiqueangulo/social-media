@@ -1,5 +1,5 @@
-const postResolvers = require("./posts.js")
-const userResolvers = require("./users.js")
+const postResolvers = require("./posts")
+const userResolvers = require("./users")
 
 module.exports = {
   Query: {
