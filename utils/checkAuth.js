@@ -8,7 +8,7 @@ module.exports = context => {
   const authHeader = context.req.headers.authorization
 
   if (!authHeader) {
-    throw new Error("Authentication header must be provided")
+    throw new Error("Authorization header must be provided")
   }
 
   // Bearer ...token
