@@ -1,18 +1,21 @@
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
+import Navbar from "./components/Navbar"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 
-import "semantic-ui-css/semantic.min.css"
 import "./App.css"
 
 function App() {
   return (
     <Router>
-      <Route exact path="/" element={Home} />
-      <Route exact path="/login" element={Login} />
-      <Route exact path="/register" element={Register} />
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
+      </Routes>
     </Router>
   )
 }
