@@ -17,10 +17,7 @@ const FETCH_POSTS = gql`
 `
 
 function Home() {
-  const {
-    loading,
-    data: { getPosts: posts },
-  } = useQuery(FETCH_POSTS)
+  const { loading, data } = useQuery(FETCH_POSTS)
 
   return (
     <div>
@@ -29,8 +26,8 @@ function Home() {
       {loading ? (
         <h1>Loading posts...</h1>
       ) : (
-        posts &&
-        posts.map(post => (
+        data.getPosts &&
+        data.getPosts.map(post => (
           <div key={post.id}>
             <PostCard post={post} />
           </div>
