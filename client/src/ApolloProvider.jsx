@@ -1,8 +1,5 @@
-// import ApolloClient from "apollo-client"
-import { ApolloClient } from "@apollo/client"
-import { InMemoryCache } from "apollo-cache-inmemory"
-import { createHttpLink } from "@apollo/react-hooks"
-import { ApolloProvider } from "@apollo/react-hooks"
+import { ApolloClient, InMemoryCache } from "@apollo/client"
+import { createHttpLink, ApolloProvider } from "@apollo/react-hooks"
 
 import App from "./App"
 
