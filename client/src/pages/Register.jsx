@@ -26,7 +26,7 @@ const REGISTER_USER = gql`
   }
 `
 
-function Register() {
+function Register(props) {
   const [errors, setErrors] = useState({})
   const [values, setValues] = useState({
     username: "",
@@ -42,9 +42,11 @@ function Register() {
   const [addUser] = useMutation(REGISTER_USER, {
     update(_, result) {
       console.log(result)
+
+      // TODO: Fix this functionality to redirect after registering
+      props.history.push("/")
     },
     onError(err) {
-      console.log(err)
       setErrors(err.graphQLErrors[0].extensions.errors)
     },
     variables: values,
