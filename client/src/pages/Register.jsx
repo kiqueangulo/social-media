@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import gql from "graphql-tag"
 import { useMutation } from "@apollo/react-hooks"
 
+import { useForm } from "../utils/hooks"
+
 const REGISTER_USER = gql`
   mutation register(
     $username: String!
@@ -28,16 +30,13 @@ const REGISTER_USER = gql`
 
 function Register(props) {
   const [errors, setErrors] = useState({})
-  const [values, setValues] = useState({
+
+  const { changeValue, handleSubmit, values } = useForm(registerUser, {
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   })
-
-  const changeValue = e => {
-    setValues({ ...values, [e.target.name]: e.target.value })
-  }
 
   const [addUser] = useMutation(REGISTER_USER, {
     update(_, result) {
@@ -52,9 +51,7 @@ function Register(props) {
     variables: values,
   })
 
-  const handleSubmit = e => {
-    e.preventDefault()
-
+  function registerUser() {
     addUser()
   }
 
