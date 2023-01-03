@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import gql from "graphql-tag"
 import { useMutation } from "@apollo/react-hooks"
 
@@ -27,6 +27,7 @@ const REGISTER_USER = gql`
 `
 
 function Register() {
+  const [errors, setErrors] = useState({})
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -38,9 +39,13 @@ function Register() {
     setValues({ ...values, [e.target.name]: e.target.value })
   }
 
-  const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(proxy, result) {
+  const [addUser] = useMutation(REGISTER_USER, {
+    update(_, result) {
       console.log(result)
+    },
+    onError(err) {
+      console.log(err)
+      setErrors(err.graphQLErrors[0].extensions.errors)
     },
     variables: values,
   })
@@ -99,6 +104,16 @@ function Register() {
 
         <button type="submit">Register</button>
       </form>
+
+      {Object.keys(errors).length > 0 && (
+        <div>
+          <ul>
+            {Object.values(errors).map(value => (
+              <li key={value}>{value}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
