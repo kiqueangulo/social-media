@@ -1,7 +1,23 @@
+import React, { useContext } from "react"
 import { Link } from "react-router-dom"
 
+import { AuthContext } from "../context/auth"
+
 function Navbar() {
-  return (
+  const { user, logout } = useContext(AuthContext)
+
+  const menuBar = user ? (
+    <div>
+      <ul>
+        <li>
+          <Link to="/">{user.username}</Link>
+        </li>
+        <li>
+          <Link onClick={logout}>Logout</Link>
+        </li>
+      </ul>
+    </div>
+  ) : (
     <div>
       <ul>
         <li>
@@ -16,6 +32,8 @@ function Navbar() {
       </ul>
     </div>
   )
+
+  return menuBar
 }
 
 export default Navbar
