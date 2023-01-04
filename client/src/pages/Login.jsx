@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import gql from "graphql-tag"
 import { useMutation } from "@apollo/react-hooks"
 
+import { AuthContext } from "../context/auth"
 import { useForm } from "../utils/hooks"
 
 const LOGIN_USER = gql`
@@ -17,6 +18,7 @@ const LOGIN_USER = gql`
 `
 
 function Login(props) {
+  const context = useContext(AuthContext)
   const [errors, setErrors] = useState({})
 
   const { changeValue, handleSubmit, values } = useForm(loginUserCallback, {
@@ -25,13 +27,13 @@ function Login(props) {
   })
 
   const [loginUser] = useMutation(LOGIN_USER, {
-    update(_, result) {
-      console.log(result)
+    update(_, { data: { login: userData } }) {
+      context.login(userData)
+
       // TODO: Fix this functionality to redirect after registering
       props.history.push("/")
     },
     onError(err) {
-      console.log(err.graphQLErrors[0])
       setErrors(err.graphQLErrors[0].extensions.errors)
     },
     variables: values,
