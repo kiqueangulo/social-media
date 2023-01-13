@@ -55,21 +55,31 @@ function PostForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Create a post:</h2>
+    <>
+      <form onSubmit={handleSubmit}>
+        <h2>Create a post:</h2>
 
-      <div>
-        <input
-          type="text"
-          name="body"
-          placeholder="Hello World!"
-          onChange={changeValue}
-          value={values.body}
-        />
-      </div>
+        <div>
+          <input
+            type="text"
+            name="body"
+            placeholder="Hello World!"
+            onChange={changeValue}
+            value={values.body}
+          />
+        </div>
 
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit">Submit</button>
+      </form>
+
+      {error && (
+        <div>
+          <ul>
+            <li>{error.graphQLErrors[0].message}</li>
+          </ul>
+        </div>
+      )}
+    </>
   )
 }
 
