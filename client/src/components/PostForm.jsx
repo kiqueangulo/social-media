@@ -41,6 +41,7 @@ function PostForm() {
         query: FETCH_POSTS,
       })
 
+      // TODO: Find the way around data.getPosts because apparently is a read only property
       data.getPosts = [result.data.createPost, ...data.getPosts]
 
       proxy.writeQuery({ query: FETCH_POSTS, data })
