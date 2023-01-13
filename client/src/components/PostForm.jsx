@@ -3,6 +3,7 @@ import gql from "graphql-tag"
 import { useMutation } from "@apollo/react-hooks"
 
 import { useForm } from "../utils/hooks"
+import { FETCH_POSTS } from "../utils/graphql"
 
 const CREATE_POST_MUTATION = gql`
   mutation createPost($body: String!) {
@@ -35,8 +36,15 @@ function PostForm() {
 
   const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
     variables: values,
-    update(_, result) {
-      console.log(result)
+    update(proxy, result) {
+      const data = proxy.readQuery({
+        query: FETCH_POSTS,
+      })
+
+      data.getPosts = [result.data.createPost, ...data.getPosts]
+
+      proxy.writeQuery({ query: FETCH_POSTS, data })
+
       values.body = ""
     },
   })
