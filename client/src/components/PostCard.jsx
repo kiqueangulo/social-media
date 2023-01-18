@@ -1,6 +1,6 @@
 import moment from "moment"
 
-function PostCard({ post: { username, body, createdAt, likeCount, commentCount } }) {
+function PostCard({ post: { id, username, body, createdAt, likeCount, commentCount } }) {
   const likePost = () => console.log("Post liked!")
 
   const commentOnPost = () => console.log("Comment on post!")
@@ -24,7 +24,9 @@ function PostCard({ post: { username, body, createdAt, likeCount, commentCount }
           <span>{likeCount}</span>
         </div>
         <div>
-          <button onClick={commentOnPost}>💬</button>
+          <button onClick={commentOnPost}>
+            <a href={`/posts/${id}`}>💬</a>
+          </button>
           <span>{commentCount}</span>
         </div>
       </div>
