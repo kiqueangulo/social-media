@@ -1,12 +1,14 @@
 import React, { useContext } from "react"
+import { Link } from "react-router-dom"
 import moment from "moment"
 
 import { AuthContext } from "../context/auth"
+import LikeButton from "./LikeButton"
 
-function PostCard({ post: { id, username, body, createdAt, likeCount, commentCount } }) {
+function PostCard({
+  post: { id, username, body, createdAt, likeCount, likes, commentCount },
+}) {
   const { user } = useContext(AuthContext)
-
-  const likePost = () => console.log("Post liked!")
 
   return (
     <>
@@ -22,13 +24,11 @@ function PostCard({ post: { id, username, body, createdAt, likeCount, commentCou
       <p>{body}</p>
 
       <div>
-        <div>
-          <button onClick={likePost}>🤍</button>
-          <span>{likeCount}</span>
-        </div>
+        <LikeButton user={user} post={{ id, likes, likeCount }} />
+
         <div>
           <button>
-            <a href={`/posts/${id}`}>💬</a>
+            <Link to={`/posts/${id}`}>💬</Link>
           </button>
           <span>{commentCount}</span>
         </div>
