@@ -1,9 +1,12 @@
+import React, { useContext } from "react"
 import moment from "moment"
 
-function PostCard({ post: { id, username, body, createdAt, likeCount, commentCount } }) {
-  const likePost = () => console.log("Post liked!")
+import { AuthContext } from "../context/auth"
 
-  const commentOnPost = () => console.log("Comment on post!")
+function PostCard({ post: { id, username, body, createdAt, likeCount, commentCount } }) {
+  const { user } = useContext(AuthContext)
+
+  const likePost = () => console.log("Post liked!")
 
   return (
     <>
@@ -24,11 +27,17 @@ function PostCard({ post: { id, username, body, createdAt, likeCount, commentCou
           <span>{likeCount}</span>
         </div>
         <div>
-          <button onClick={commentOnPost}>
+          <button>
             <a href={`/posts/${id}`}>💬</a>
           </button>
           <span>{commentCount}</span>
         </div>
+
+        {user && user.username === username && (
+          <div>
+            <button onClick={() => console.log("Delete Post")}>🚮</button>
+          </div>
+        )}
       </div>
     </>
   )
